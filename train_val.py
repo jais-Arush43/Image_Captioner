@@ -6,12 +6,8 @@ from config import config, rnnConfig
 import random
 import tensorflow as tf
 
-# Setting random seed for reproducibility of results
 random.seed(config['random_seed'])
 
-"""
-    *Some simple checking
-"""
 assert type(config['num_of_epochs']) is int, 'Please provide an integer value for `num_of_epochs` parameter in config.py file'
 assert type(config['max_length']) is int, 'Please provide an integer value for `max_length` parameter in config.py file'
 assert type(config['batch_size']) is int, 'Please provide an integer value for `batch_size` parameter in config.py file'
@@ -22,18 +18,11 @@ assert type(rnnConfig['LSTM_units']) is int, 'Please provide an integer value fo
 assert type(rnnConfig['dense_units']) is int, 'Please provide an integer value for `dense_units` parameter in config.py file'
 assert type(rnnConfig['dropout']) is float, 'Please provide a float value for `dropout` parameter in config.py file'
 
-"""
-	*Load Data
-	*X1 : Image features
-	*X2 : Text features(Captions)
-"""
 X1train, X2train, max_length = loadTrainData(config)
 
 X1val, X2val = loadValData(config)
 
-"""
-	*Load the tokenizer
-"""
+
 tokenizer = load(open(config['tokenizer_path'], 'rb'))
 vocab_size = len(tokenizer.word_index) + 1
 
@@ -41,14 +30,12 @@ vocab_size = len(tokenizer.word_index) + 1
 	*Now that we have the image features from CNN model, we need to feed them to a RNN Model.
 	*Define the RNN model
 """
-# model = RNNModel(vocab_size, max_length, rnnConfig, config['model_type'])
+
 model = RNNModel(vocab_size, max_length, rnnConfig, config['model_type'])
 print('RNN Model (Decoder) Summary : ')
 print(model.summary())
 
-"""
-    *Train the model save after each epoch
-"""
+
 num_of_epochs = config['num_of_epochs']
 batch_size = config['batch_size']
 steps_train = len(X2train)//batch_size
