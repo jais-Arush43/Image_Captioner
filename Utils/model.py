@@ -28,7 +28,7 @@ def RNNModel(vocab_size, max_len, rnnConfig, model_type):
 	embedding_size = rnnConfig['embedding_size']
 	if model_type == 'inceptionv3':
 		# InceptionV3 outputs a 2048 dimensional vector for each image, which we'll feed to RNN Model
-		image_input = Input(shape=(1000,))
+		image_input = Input(shape=(2048,))
 	elif model_type == 'vgg16':
 		# VGG16 outputs a 4096 dimensional vector for each image, which we'll feed to RNN Model
 		image_input = Input(shape=(4096,))
